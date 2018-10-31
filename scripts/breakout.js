@@ -51,7 +51,7 @@ Breakout.main = (function (graphics, input) {
 			dr = -dr;
 		}
 
-		// Cieling
+		// Ceiling
 		if (y + dy < 13) {
 			dy = -dy;
 			dr = -dr;
