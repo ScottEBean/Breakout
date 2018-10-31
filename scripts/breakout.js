@@ -98,7 +98,16 @@ Breakout.main = (function (graphics, input) {
 		if (bTp > 295 || bBt < 100) { return false; }
 
 		var index = calculateRow(bTp, bBt) + calculateCol(bLt, bRt);
-		if(isNaN(index)){	return false;	}
+		// check individually
+
+		if (index === undefined) {
+			console.log("brick left " + bLt);
+			console.log("brick right " + bRt);
+			console.log("brick Top " + bTp);
+			console.log("brick bottom " + bBt);
+			return false;
+		}
+		//if(isNaN(index)){	return false;	}
 		console.log("index: " + index);
 		var brick = gameBricks.getBrick(index);
 
@@ -127,7 +136,7 @@ Breakout.main = (function (graphics, input) {
 		if (bTp < 170 && bTp > 150 || bBt < 170 && bBt > 150) { return 28; }
 		if (bTp < 145 && bTp > 125 || bBt < 145 && bBt > 125) { return 14; }
 		if (bTp < 120 && bTp > 100 || bBt < 120 && bBt > 100) { return 0; }
-		//return -1;
+		return undefined;
 	}
 
 	function calculateCol(bLt, bRt) {
@@ -145,7 +154,7 @@ Breakout.main = (function (graphics, input) {
 		if (bRt > 11 * brickAndGap + 5 && bRt < 12 * brickAndGap || bLt > 11 * brickAndGap + 5 && bLt < 12 * brickAndGap) { return 11; }
 		if (bRt > 12 * brickAndGap + 5 && bRt < 13 * brickAndGap || bLt > 12 * brickAndGap + 5 && bLt < 13 * brickAndGap) { return 12; }
 		if (bRt > 13 * brickAndGap + 5 && bRt < 14 * brickAndGap || bLt > 13 * brickAndGap + 5 && bLt < 14 * brickAndGap) { return 13; }
-		//return -1;
+		return undefined;
 	}
 
 	function addPoints(pts) {
