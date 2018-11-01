@@ -34,6 +34,10 @@ Breakout.graphics = (function () {
 		var that = {},
 			ready = false,
 			image = new Image();
+			var center = {
+				x: spec.center.x,
+				y: spec.center.y
+			};
 
 		image.onload = function () {
 			ready = true;
@@ -42,7 +46,7 @@ Breakout.graphics = (function () {
 		image.src = spec.imageSrc;
 
 		that.update = function (dx, dy, rotationAngle, elapsedTime) {
-			
+
 
 			spec.center.x += dx;
 			spec.center.y += dy;
@@ -55,8 +59,8 @@ Breakout.graphics = (function () {
 			spec.rotation += rotationAngle;
 		};
 
-		that.getCenter = function(){
-			return spec.center.x;
+		that.getCenter = function () {
+			return center;
 		};
 
 		that.reset = function () {
@@ -65,7 +69,7 @@ Breakout.graphics = (function () {
 			spec.rotation = 0;
 		};
 
-		that.getRate = function(){
+		that.getRate = function () {
 			return spec.moveRate;
 		};
 
@@ -133,19 +137,19 @@ Breakout.graphics = (function () {
 			}
 		};
 
-		that.getCenter = function(){
+		that.getCenter = function () {
 			return spec.center.x;
 		};
 
 		that.leftEdge = function () {
 			return spec.center.x - spec.width / 2;
 		};
-	
+
 		that.rightEdge = function () {
 			return spec.center.x + spec.width / 2;
 		};
 
-		that.getWidth = function(){
+		that.getWidth = function () {
 			return spec.width;
 		};
 
@@ -170,12 +174,18 @@ Breakout.graphics = (function () {
 		var that = {};
 		var pointValue = spec.pointValue;
 		var exists = spec.exists;
-		
+		var center = {
+			x: spec.x,
+			y: spec.y
+		};
+		var width = spec.width;
+		var height = spec.height;
+
 		that.getPoints = function () {
 			return pointValue;
 		};
 
-		that.doesExist = function (){
+		that.doesExist = function () {
 			return exists;
 		};
 
@@ -203,6 +213,17 @@ Breakout.graphics = (function () {
 			exists = spec.exists;
 		}
 
+		that.getCenter = function(){
+			return center;
+		}
+		
+		that.getHeight = function (){
+			return height;
+		}
+
+		that.getWidth = function (){
+			return width;
+		}
 		return that;
 	}
 
@@ -211,22 +232,22 @@ Breakout.graphics = (function () {
 	function Bricks() {
 		var that = {};
 		var gap = 5;
-		var brickWidth = (canvas.width - (15*gap)) / 14;
+		var brickWidth = (canvas.width - (15 * gap)) / 14;
 		var brickHeight = 20
 		var brickArr = [];
 		var indexList = [];
-		
-		that.getBrick = function(index){
+
+		that.getBrick = function (index) {
 			return brickArr[index];
 		}
 		var count = 0;
-		for (var i = 0; i < 8 ; i++) {
+		for (var i = 0; i < 8; i++) {
 			for (var j = 0; j < 14; j++) {
 				indexList.push(count++);
 				if (i == 0 || i == 1) { //green
 					brickArr.push(Brick({
-						exists: true,						
-						x: j * (brickWidth + gap) + gap , y: i * (brickHeight + gap) + 100, width: brickWidth, height: brickHeight,
+						exists: true,
+						x: j * (brickWidth + gap) + gap, y: i * (brickHeight + gap) + 100, width: brickWidth, height: brickHeight,
 						fill: 'rgba(0, 225, 0, 1)',
 						stroke: 'rgba(0, 0, 0, 0)',
 						pointValue: 5
@@ -271,11 +292,11 @@ Breakout.graphics = (function () {
 			}
 		};
 
-		that.indexExists = function(index){
+		that.indexExists = function (index) {
 			return indexList[index];
 		}
 
-		that.setFalse = function(index){
+		that.setFalse = function (index) {
 			indexList[index] = 0;
 		}
 

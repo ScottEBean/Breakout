@@ -5,6 +5,7 @@ Breakout.main = (function (graphics, input) {
 	let x = CANVASWIDTH / 2;
 	let y = CANVASHEIGHT - 50 //CANVASHEIGHT is the floor, -50 is the starting position of the bat.
 	let brickAndGap = ((CANVASWIDTH - (15 * 5)) / 14) + 5;
+	//let brick = null;
 	let dx = 0;
 	let dy = 0;
 	let dr = 0.20;
@@ -62,7 +63,7 @@ Breakout.main = (function (graphics, input) {
 
 			if (x > gameBat.leftEdge() && x < gameBat.rightEdge()) { //bat
 				dy = -dy;
-				dx = 15 * ((gameBall.getCenter() - gameBat.getCenter()) / (gameBat.getWidth() / 2));
+				dx = 15 * ((gameBall.getCenter().x - gameBat.getCenter()) / (gameBat.getWidth() / 2));
 				console.log("dx: " + dx);
 				dr = -dr
 			} else { //floor
@@ -81,8 +82,8 @@ Breakout.main = (function (graphics, input) {
 
 		//bricks
 		if (brickCollision(x, y)) {
-			dx = -dx;
 			dy = -dy;
+			dx = -dx;
 		}
 
 		x += dx;
@@ -97,26 +98,17 @@ Breakout.main = (function (graphics, input) {
 
 		if (bTp > 295 || bBt < 100) { return false; }
 
-		var index = calculateRow(bTp, bBt) + calculateCol(bLt, bRt);
-		// check individually
+		var indexRow = calculateRow(bTp, bBt);
+		var indexCol = calculateCol(bLt, bRt);
 
-		if (index === undefined) {
-			console.log("brick left " + bLt);
-			console.log("brick right " + bRt);
-			console.log("brick Top " + bTp);
-			console.log("brick bottom " + bBt);
+		if (isNaN(indexRow) || isNaN(indexCol)) {
 			return false;
 		}
-		//if(isNaN(index)){	return false;	}
-		console.log("index: " + index);
+
+		var index = indexRow + indexCol;
+
 		var brick = gameBricks.getBrick(index);
 
-		//------------------------------------------------------------------------
-		// The error is happening in the if. It only throws an exception when 
-		// the brick has already been hit.
-		// It continually runs the checks and eventually get NaN for the index.
-		//------------|----------------------------------------------------------
-		//            v
 		if (brick.doesExist()) {
 			addPoints(brick.getPoints());
 			brick.update(false);
@@ -127,6 +119,7 @@ Breakout.main = (function (graphics, input) {
 		return false;
 	}
 
+
 	function calculateRow(bTp, bBt) {
 		if (bTp < 295 && bTp > 275 || bBt < 295 && bBt > 275) { return 98; }
 		if (bTp < 270 && bTp > 250 || bBt < 270 && bBt > 250) { return 84; }
@@ -136,7 +129,7 @@ Breakout.main = (function (graphics, input) {
 		if (bTp < 170 && bTp > 150 || bBt < 170 && bBt > 150) { return 28; }
 		if (bTp < 145 && bTp > 125 || bBt < 145 && bBt > 125) { return 14; }
 		if (bTp < 120 && bTp > 100 || bBt < 120 && bBt > 100) { return 0; }
-		return undefined;
+		return NaN;
 	}
 
 	function calculateCol(bLt, bRt) {
@@ -154,7 +147,7 @@ Breakout.main = (function (graphics, input) {
 		if (bRt > 11 * brickAndGap + 5 && bRt < 12 * brickAndGap || bLt > 11 * brickAndGap + 5 && bLt < 12 * brickAndGap) { return 11; }
 		if (bRt > 12 * brickAndGap + 5 && bRt < 13 * brickAndGap || bLt > 12 * brickAndGap + 5 && bLt < 13 * brickAndGap) { return 12; }
 		if (bRt > 13 * brickAndGap + 5 && bRt < 14 * brickAndGap || bLt > 13 * brickAndGap + 5 && bLt < 14 * brickAndGap) { return 13; }
-		return undefined;
+		return NaN;
 	}
 
 	function addPoints(pts) {
