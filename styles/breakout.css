@@ -12,6 +12,10 @@ body{
 }
 
 #container{
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	
 	color: #00d0d0;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;	
@@ -19,38 +23,30 @@ body{
 }
 
 #canvases {	
-	margin-left: auto;
-	margin-right: auto;
-  display: block;
-	width: 1000px;
-	height: 750px;
+	flex: 1 1 auto;
+	max-width: 1000px;
 	color: #00d0d0;	
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;	
 	font-size:18px;
-	border-left:1px solid #00d0d0;
-	border-right:1px solid #00d0d0;
-}
-
-.column{
-	padding: 10px;
-	border-top: 1px soldid #00d0d0
-	display: block;
-  margin-left: auto;
-  margin-right: auto;
+	border:1px solid #00d0d0;
 	
 }
 
-.left {
-	float: left;
-	float: right;
-}
-.right{
-	width: 400px; 
+.column{	
+	padding: 10px;
+	border-top: 1px solid #00d0d0;	
 }
 
-.row:after{
+.left .right {	
+	flex: 1 1 auto;
+	min-width: 400px;
+	max-width: 400px;
+}
+
+
+/* .row:after{
 	content: "";
   display: table;
   clear: both;
-}
+} */

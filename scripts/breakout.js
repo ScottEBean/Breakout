@@ -61,10 +61,10 @@ Breakout.main = (function (graphics, input) {
 		// Bat and floor
 		if (y + dy > CANVASHEIGHT - 38) {
 
-			if (x > gameBat.leftEdge() && x < gameBat.rightEdge()) { //bat
+			if (x + dx > gameBat.leftEdge() && x + dx < gameBat.rightEdge()) { //bat
 				dy = -dy;
 				dx = 15 * ((gameBall.getCenter().x - gameBat.getCenter()) / (gameBat.getWidth() / 2));
-				console.log("dx: " + dx);
+				//console.log("dx: " + dx);
 				dr = -dr
 			} else { //floor
 				dy = 0;
