@@ -12,10 +12,24 @@
 </head>
 
 <body>
-	<div id="canvases">
-		<canvas class="canvas" id="canvas-background" width="1000" height="750" style=" z-index: 1; position: absolute;"></canvas>
-		<canvas class="canvas" id="canvas-main" width="1000" height="750" style="z-index: 2; position: absolute;"></canvas>
+	<div id="header">
+		<h1>Breakout!</h1>
 	</div>
+	<div id="container" class="row">
+
+		<div id="menu" class="column left">
+			<span>This is a menu</span>
+		</div>
+		<div id="canvases" class="column middle">
+			<canvas class="canvas" id="canvas-background" width="1000" height="750" style=" z-index: 1; position: absolute;"></canvas>
+			<canvas class="canvas" id="canvas-main" width="1000" height="750" style="z-index: 2; position: absolute;"></canvas>
+		</div>
+		<div id="gameInfo" class="column right">
+			<span>This is game info</span>
+			this is more game info
+		</div>
+	</div>
+
 
 	<script>
 		var Breakout = {};

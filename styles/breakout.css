@@ -6,6 +6,18 @@ body{
 	font-size:18px;
 }
 
+#header{
+	text-align: center;
+	padding: 20px;
+}
+
+#container{
+	color: #00d0d0;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;	
+	font-size:18px;
+}
+
 #canvases {	
 	margin-left: auto;
 	margin-right: auto;
@@ -16,4 +28,29 @@ body{
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;	
 	font-size:18px;
+	border-left:1px solid #00d0d0;
+	border-right:1px solid #00d0d0;
+}
+
+.column{
+	padding: 10px;
+	border-top: 1px soldid #00d0d0
+	display: block;
+  margin-left: auto;
+  margin-right: auto;
+	
+}
+
+.left {
+	float: left;
+	float: right;
+}
+.right{
+	width: 400px; 
+}
+
+.row:after{
+	content: "";
+  display: table;
+  clear: both;
 }
