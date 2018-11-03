@@ -16,6 +16,7 @@ body{
 	justify-content: center;
 	align-items: stretch;
 	
+	
 	color: #00d0d0;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;	
@@ -25,28 +26,35 @@ body{
 #canvases {	
 	flex: 1 1 auto;
 	max-width: 1000px;
+	min-height: 750px;
 	color: #00d0d0;	
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;	
 	font-size:18px;
-	border:1px solid #00d0d0;
+	border:5px solid #00d0d0;
 	
 }
 
 .column{	
 	padding: 10px;
-	border-top: 1px solid #00d0d0;	
+	border-top: 5px solid #00d0d0;	
 }
 
 .left .right {	
-	flex: 1 1 auto;
+	flex: 0 1 auto;
 	min-width: 400px;
 	max-width: 400px;
+	min-height: 750px;
+	max-height: 750px;	
+}	 
+	
+
+#paddles{	
+	padding-top: 20px;
+	display: flex;
+	justify-content: center;
+	
+	/* margin-left: auto;
+	margin-right: auto;
+	display: block; */
 }
-
-
-/* .row:after{
-	content: "";
-  display: table;
-  clear: both;
-} */

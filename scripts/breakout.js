@@ -5,13 +5,13 @@ Breakout.main = (function (graphics, input) {
 	let x = CANVASWIDTH / 2;
 	let y = CANVASHEIGHT - 50 //CANVASHEIGHT is the floor, -50 is the starting position of the bat.
 	let brickAndGap = ((CANVASWIDTH - (15 * 5)) / 14) + 5;
-	//let brick = null;
 	let dx = 0;
 	let dy = 0;
 	let dr = 0.20;
 	let brickCount = 0;
 	let knuckleBall = false;
 	let points = 0;
+	let bats = 3;
 
 	let lastTimeStamp = performance.now();
 	let keyboard = input.Keyboard();
@@ -38,6 +38,7 @@ Breakout.main = (function (graphics, input) {
 	var gameBricks = graphics.Bricks();
 
 	graphics.drawBackground();
+	graphics.drawPaddles(bats);
 	gameBall.init(dr);
 
 	function processInput(elapsedTime) {
@@ -119,7 +120,6 @@ Breakout.main = (function (graphics, input) {
 		return false;
 	}
 
-
 	function calculateRow(bTp, bBt) {
 		if (bTp < 295 && bTp > 275 || bBt < 295 && bBt > 275) { return 98; }
 		if (bTp < 270 && bTp > 250 || bBt < 270 && bBt > 250) { return 84; }
@@ -171,10 +171,12 @@ Breakout.main = (function (graphics, input) {
 	}
 
 	function go() {
+		if(bats < 1){return;}
 		if (knuckleBall) {
 			dx = -dx;
 			dy = -dy;
 			knuckleBall = false;
+			graphics.drawPaddles(--bats);
 		}
 
 		dx = 7;
@@ -183,7 +185,7 @@ Breakout.main = (function (graphics, input) {
 
 	function update(elapsedTime) {
 		calculateBallCollisions();
-		//updateBallSpeed(); This needs work
+		updateBallSpeed();
 		gameBall.update(dx, dy, dr, elapsedTime);
 	}
 

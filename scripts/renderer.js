@@ -9,6 +9,7 @@ Breakout.graphics = (function () {
 	let backgroundContext = canvasBackground.getContext('2d');
 	let canvas = document.getElementById('canvas-main');
 	let context = canvas.getContext('2d');
+	let paddles = document.getElementById('paddles');
 
 	function drawBackground() {
 		backgroundContext.clearRect(0, 0, canvasBackground.width, canvasBackground.height);
@@ -17,6 +18,21 @@ Breakout.graphics = (function () {
 		img.addEventListener('load', function () {
 			backgroundContext.drawImage(img, 0, 0);
 		}, false);
+	}
+
+	function drawPaddles(count){
+		if(count < 0){return;}
+		while (paddles.firstChild) {
+			paddles.removeChild(paddles.firstChild);
+		}
+		
+		for(var i = 0; i < count; i++){
+			var bats = document.createElement('img');
+			bats.setAttribute('src', 'images/bats.png');
+			bats.setAttribute('width', 75);
+			bats.setAttribute('height', 75);			
+			paddles.appendChild(bats);
+		}
 	}
 
 	//------------------------------------------------------------------
@@ -46,8 +62,6 @@ Breakout.graphics = (function () {
 		image.src = spec.imageSrc;
 
 		that.update = function (dx, dy, rotationAngle, elapsedTime) {
-
-
 			spec.center.x += dx;
 			spec.center.y += dy;
 			spec.rotation += rotationAngle;
@@ -168,7 +182,6 @@ Breakout.graphics = (function () {
 		return that;
 	}
 
-
 	/**********  Brick  **********/
 	function Brick(spec) {
 		var that = {};
@@ -226,8 +239,7 @@ Breakout.graphics = (function () {
 		}
 		return that;
 	}
-
-	//brickArr.push(new Brick({
+	
 	/********** Bricks  **********/
 	function Bricks() {
 		var that = {};
@@ -309,9 +321,9 @@ Breakout.graphics = (function () {
 		return that;
 	}
 
-
 	return {
 		drawBackground: drawBackground,
+		drawPaddles: drawPaddles,
 		clear: clear,
 		Baseball: Baseball,
 		Bat: Bat,
