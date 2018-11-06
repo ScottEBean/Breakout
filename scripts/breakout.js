@@ -170,7 +170,6 @@ Breakout.main = (function (graphics, input) {
 	
 	function go() {		
 		if(bats < 1 || Math.abs(dx) > 0 || Math.abs(dy) > 0){ return; }
-		updateBallSpeed();
 		
 		graphics.setCountdownTextProps();
 		graphics.drawText("3", 250, 200);
