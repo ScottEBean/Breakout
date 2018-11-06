@@ -64,13 +64,13 @@ Breakout.main = (function (graphics, input) {
 
 			if (x + dx > gameBat.leftEdge() && x + dx < gameBat.rightEdge()) { //bat
 				dy = -dy;
-				dx = 15 * ((gameBall.getCenter().x - gameBat.getCenter()) / (gameBat.getWidth() / 2));
-				//console.log("dx: " + dx);
+				dx = 15 * ((gameBall.getCenter().x - gameBat.getCenter()) / (gameBat.getWidth() / 2));			
 				dr = -dr
 			} else { //floor
 				dy = 0;
 				dx = 0;
 				brickCount = 0;
+				updateBallSpeed();
 				knuckleBall = true;
 				return;
 			}

@@ -53,7 +53,11 @@ Breakout.graphics = (function () {
        
 	function drawText(text, x, y){
 		topContext.fillText(text, x, y);
-		console.log(topContext.measureText(text));
+		
+		// This was used to set the correct x coordinate for text.
+		// For no conceivable reason text is drawn from the x: left y: bottom
+		// or x: left y:middle of the character/string
+		//console.log(topContext.measureText(text));
 	}
 
 	//------------------------------------------------------------------
