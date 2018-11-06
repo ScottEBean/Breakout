@@ -9,6 +9,8 @@ Breakout.graphics = (function () {
 	let backgroundContext = canvasBackground.getContext('2d');
 	let canvas = document.getElementById('canvas-main');
 	let context = canvas.getContext('2d');
+	let topLayer = document.getElementById('canvas-topLayer');
+	let topContext = topLayer.getContext('2d');
 	let paddles = document.getElementById('paddles');
 
 	function drawBackground() {
@@ -20,19 +22,38 @@ Breakout.graphics = (function () {
 		}, false);
 	}
 
-	function drawPaddles(count){
-		if(count < 0){return;}
+	function drawPaddles(count) {
+		if (count < 0) { return; }
 		while (paddles.firstChild) {
 			paddles.removeChild(paddles.firstChild);
 		}
-		
-		for(var i = 0; i < count; i++){
+
+		for (var i = 0; i < count; i++) {
 			var bats = document.createElement('img');
 			bats.setAttribute('src', 'images/bats.png');
 			bats.setAttribute('width', 75);
-			bats.setAttribute('height', 75);			
+			bats.setAttribute('height', 75);
 			paddles.appendChild(bats);
 		}
+	}
+
+	function setCountdownTextProps(){		
+		topContext.font = '45px Roboto';
+		topContext.fillStyle = "rgba(0, 0, 0, 0.25)";
+		topContext.fillRect(0, 0, canvas.width, canvas.height);
+		topContext.fillStyle = '#00d0d0';				
+	}
+
+	function setLargeTextProps(){
+		topContext.font = '125px Roboto';
+		topContext.fillStyle = "rgba(0, 0, 0, 0.25)";
+		topContext.fillRect(0, 0, canvas.width, canvas.height);
+		topContext.fillStyle = '#00d0d0';	
+	}
+       
+	function drawText(text, x, y){
+		topContext.fillText(text, x, y);
+		console.log(topContext.measureText(text));
 	}
 
 	//------------------------------------------------------------------
@@ -45,15 +66,22 @@ Breakout.graphics = (function () {
 		context.restore();
 	}
 
+	function clearTopLayer() {
+		topContext.save();
+		topContext.setTransform(1, 0, 0, 1, 0, 0);
+		topContext.clearRect(0, 0, canvas.width, canvas.height);
+		topContext.restore();
+	}
+
 	/********** Baseball **********/
 	function Baseball(spec) {
 		var that = {},
 			ready = false,
 			image = new Image();
-			var center = {
-				x: spec.center.x,
-				y: spec.center.y
-			};
+		var center = {
+			x: spec.center.x,
+			y: spec.center.y
+		};
 
 		image.onload = function () {
 			ready = true;
@@ -226,20 +254,20 @@ Breakout.graphics = (function () {
 			exists = spec.exists;
 		}
 
-		that.getCenter = function(){
+		that.getCenter = function () {
 			return center;
 		}
-		
-		that.getHeight = function (){
+
+		that.getHeight = function () {
 			return height;
 		}
 
-		that.getWidth = function (){
+		that.getWidth = function () {
 			return width;
 		}
 		return that;
 	}
-	
+
 	/********** Bricks  **********/
 	function Bricks() {
 		var that = {};
@@ -324,6 +352,10 @@ Breakout.graphics = (function () {
 	return {
 		drawBackground: drawBackground,
 		drawPaddles: drawPaddles,
+		setCountdownTextProps: setCountdownTextProps,
+		setLargeTextProps: setLargeTextProps,
+		drawText: drawText,
+		clearTopLayer: clearTopLayer,
 		clear: clear,
 		Baseball: Baseball,
 		Bat: Bat,

@@ -114,6 +114,7 @@ Breakout.main = (function (graphics, input) {
 			addPoints(brick.getPoints());
 			brick.update(false);
 			brickCount++;
+			updateBallSpeed();
 			return true;
 		}
 
@@ -154,14 +155,6 @@ Breakout.main = (function (graphics, input) {
 		points += pts;
 	}
 
-	// function reset(){
-	// 	gameBat.reset();
-	// 	gameBall.reset();
-	// 	render();		
-	// 	requestAnimationFrame(breakoutLoop);
-	// 	knuckleBall = false;
-	// }
-
 	function updateBallSpeed() {
 		if (brickCount < 4) { dx *= 1.00; dy *= 1.00; }
 		if (brickCount == 4) { dx *= 1.25; dy *= 1.25; }
@@ -170,22 +163,36 @@ Breakout.main = (function (graphics, input) {
 		if (brickCount == 62) { dx *= 2.00; dy *= 2.00; }
 	}
 
-	function go() {
-		if(bats < 1){return;}
-		if (knuckleBall) {
-			dx = -dx;
-			dy = -dy;
-			knuckleBall = false;
-			graphics.drawPaddles(--bats);
-		}
-
-		dx = 7;
-		dy = -5;
+	function drawGameOver(){
+		graphics.setLargeTextProps();
+		graphics.drawText("Game Over :(", 141, 350);
+	}
+	
+	function go() {		
+		if(bats < 1 || Math.abs(dx) > 0 || Math.abs(dy) > 0){ return; }
+		updateBallSpeed();
+		
+		graphics.setCountdownTextProps();
+		graphics.drawText("3", 250, 200);
+		setTimeout(function () { graphics.drawText("2", 500, 200); }, 1000);
+		setTimeout(function () { graphics.drawText("1", 750, 200); }, 2000);
+		setTimeout(function () { graphics.setLargeTextProps(); }, 2999);
+		setTimeout(function () { graphics.drawText("Go!", 405, 500); }, 3000);
+		setTimeout(function () { graphics.clearTopLayer(); }, 3300);
+		setTimeout(function (){
+			if (knuckleBall) {
+				graphics.drawPaddles(--bats);
+				dx = -dx;
+				dy = -dy;
+				knuckleBall = false;				
+			}
+			dx = 7;
+			dy = -5;
+		}, 3300);
 	}
 
 	function update(elapsedTime) {
 		calculateBallCollisions();
-		updateBallSpeed();
 		gameBall.update(dx, dy, dr, elapsedTime);
 	}
 
