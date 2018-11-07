@@ -12,6 +12,8 @@ Breakout.graphics = (function () {
 	let topLayer = document.getElementById('canvas-topLayer');
 	let topContext = topLayer.getContext('2d');
 	let paddles = document.getElementById('paddles');
+	let paddleImage = new Image();
+	paddleImage.src = 'images/bat.png';
 
 	function drawBackground() {
 		backgroundContext.clearRect(0, 0, canvasBackground.width, canvasBackground.height);
@@ -23,18 +25,18 @@ Breakout.graphics = (function () {
 	}
 
 	function drawPaddles(count) {
-		if (count < 0) { return; }
-		while (paddles.firstChild) {
-			paddles.removeChild(paddles.firstChild);
-		}
+		for (var i = 0; i < count; i++){
+			context.save();	
+			context.drawImage(
+				paddleImage,
+				i*(75) +10*(i+1),
+				740,
+				75,
+				8
+				);
 
-		for (var i = 0; i < count; i++) {
-			var bats = document.createElement('img');
-			bats.setAttribute('src', 'images/bats.png');
-			bats.setAttribute('width', 75);
-			bats.setAttribute('height', 75);
-			paddles.appendChild(bats);
-		}
+			context.restore();
+		}	
 	}
 
 	function setCountdownTextProps(){		
@@ -42,6 +44,11 @@ Breakout.graphics = (function () {
 		topContext.fillStyle = "rgba(0, 0, 0, 0.25)";
 		topContext.fillRect(0, 0, canvas.width, canvas.height);
 		topContext.fillStyle = '#00d0d0';				
+	}
+
+	function setScoreTextProps(){
+		context.font = '15px Roboto';
+		context.fillStyle = '#00d0d0';
 	}
 
 	function setLargeTextProps(){
@@ -58,6 +65,13 @@ Breakout.graphics = (function () {
 		// For no conceivable reason text is drawn from the x: left y: bottom
 		// or x: left y:middle of the character/string
 		//console.log(topContext.measureText(text));
+	}
+
+	function drawScore(score){
+		setScoreTextProps();
+		var scoreText = 'Score: ' + score;
+		var textWidth = context.measureText(scoreText).width + 10;
+		context.fillText(scoreText, canvas.width - textWidth , canvas.height - 10);
 	}
 
 	//------------------------------------------------------------------
@@ -356,6 +370,7 @@ Breakout.graphics = (function () {
 	return {
 		drawBackground: drawBackground,
 		drawPaddles: drawPaddles,
+		drawScore: drawScore,
 		setCountdownTextProps: setCountdownTextProps,
 		setLargeTextProps: setLargeTextProps,
 		drawText: drawText,

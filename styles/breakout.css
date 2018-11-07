@@ -50,5 +50,5 @@ body{
 #paddles{	
 	padding-top: 20px;
 	display: flex;
-	justify-content: center;
+	justify-content: left;
 }

@@ -3,7 +3,7 @@ Breakout.main = (function (graphics, input) {
 	let CANVASWIDTH = 1000;
 	let CANVASHEIGHT = 750;
 	let x = CANVASWIDTH / 2;
-	let y = CANVASHEIGHT - 50 //CANVASHEIGHT is the floor, -50 is the starting position of the bat.
+	let y = CANVASHEIGHT - 75 //CANVASHEIGHT is the floor, -50 is the starting position of the bat.
 	let brickAndGap = ((CANVASWIDTH - (15 * 5)) / 14) + 5;
 	let dx = 0;
 	let dy = 0;
@@ -38,7 +38,7 @@ Breakout.main = (function (graphics, input) {
 	var gameBricks = graphics.Bricks();
 
 	graphics.drawBackground();
-	graphics.drawPaddles(bats);
+	
 	gameBall.init(dr);
 
 	function processInput(elapsedTime) {
@@ -60,7 +60,7 @@ Breakout.main = (function (graphics, input) {
 		}
 
 		// Bat and floor
-		if (y + dy > CANVASHEIGHT - 38) {
+		if (y + dy > CANVASHEIGHT - 63) {
 
 			if (x + dx > gameBat.leftEdge() && x + dx < gameBat.rightEdge()) { //bat
 				dy = -dy;
@@ -193,10 +193,13 @@ Breakout.main = (function (graphics, input) {
 	function update(elapsedTime) {
 		calculateBallCollisions();
 		gameBall.update(dx, dy, dr, elapsedTime);
+		
 	}
 
 	function render() {
 		graphics.clear();
+		graphics.drawPaddles(bats);
+		graphics.drawScore(points);
 		gameBall.draw();
 		gameBat.draw();
 		gameBricks.draw();
