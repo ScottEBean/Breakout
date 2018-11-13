@@ -16,8 +16,9 @@ Breakout.screens['game-play'] = (function (menu, graphics, input) {
 
 	let lastTimeStamp = performance.now();
 	let keyboard = input.Keyboard();
+	let mouse = input.Mouse();
 
-	function initialize(){
+	//function initialize(){
 		let gameBall = graphics.Baseball({
 			imageSrc: 'images/baseball.png',
 			center: { x: x, y: y },
@@ -53,7 +54,7 @@ Breakout.screens['game-play'] = (function (menu, graphics, input) {
 			cancelNextRequest = true;
 			menu.showScreen('main-menu');
 		})
-	}
+	//}
 
 	function processInput(elapsedTime) {
 		keyboard.processInput(elapsedTime);
@@ -219,7 +220,6 @@ Breakout.screens['game-play'] = (function (menu, graphics, input) {
 	function update(elapsedTime) {
 		calculateBallCollisions();
 		gameBall.update(dx, dy, dr, elapsedTime);
-
 	}
 
 	function render() {

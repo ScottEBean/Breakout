@@ -1,4 +1,5 @@
 Breakout.input = (function () {	
+	'use strict';
 
 	function Mouse() {
 		let that = {
@@ -73,7 +74,7 @@ Breakout.input = (function () {
 	function Keyboard() {
 		let that = {
 			keys: {},
-			handlers: {}
+			handlers: []
 		};
 
 		that.registerCommand = function (key, handler) {

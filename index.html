@@ -19,7 +19,6 @@
 	</div>
 	<div id="game">
 
-
 		<div id="main-menu" class="screen">
 			<ul class="menu">
 				<li><button id="id-new-game" class="button">New&nbsp;Game</button></li>
@@ -35,7 +34,6 @@
 			<canvas class="canvas" id="canvas-topLayer" width="1000" height="750" style="z-index: 3; position: absolute;"></canvas>
 		</div>
 
-
 		<div id="high-scores" class="screen">
 			<h1>High Scores</h1>
 			<ol>
@@ -48,7 +46,6 @@
 			</ul>
 		</div>
 
-
 		<div id="help" class="screen">
 			<h1>Help</h1>
 			<p>Move paddle Left: <- and/or "a" </p> <p>Move paddle right: -> and/or "d"</p>
@@ -58,7 +55,6 @@
 				<li><button id="id-help-back" class="button">Back</button></li>
 			</ul>
 		</div>
-
 
 		<div id="about" class="screen">
 			<h1>About</h1>
@@ -73,17 +69,18 @@
 		</div>
 
 	</div>
+
 	<script>
 		let Breakout = { screens: {}, };
 	</script>
 	<script src="scripts/input.js"></script>
 	<script src="scripts/renderer.js"></script>
 	<script src="scripts/breakout.js"></script>
-	<script src="scripts/menus/menu.js"></script>
-	<script src="scripts/menus/mainmenu.js"></script>
-	<script src="scripts/menus/about.js"></script>
-	<script src="scripts/menus/help.js"></script>
-	<script src="scripts/menus/highscores.js"></script>
+	<script src="scripts/menu.js"></script>
+	<script src="scripts/mainmenu.js"></script>
+	<script src="scripts/about.js"></script>
+	<script src="scripts/help.js"></script>
+	<script src="scripts/highscores.js"></script>
 
 </body>
 
