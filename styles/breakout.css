@@ -20,35 +20,90 @@ body{
 	font-size: 40px;
 }
 
-#container{
-	display: flex;
-	justify-content: center;
-	align-items: stretch;			
-}
-
-#canvases {	
-	flex: 1 1 auto;
+.canvases {		
 	max-width: 1000px;
 	min-height: 750px;
 	border:5px solid #00d0d0;	
 }
 
-.column{	
-	padding: 10px;
-	border-top: 5px solid #00d0d0;	
+#game {
+	margin: 0 auto;	
 }
 
-.left .right {	
-	flex: 0 1 auto;
-	min-width: 460px;
-	max-width: 460px;
-	min-height: 750px;
-	max-height: 750px;	
-	white-space: pre;
-}	 	
+#game .screen {	
+	width: 1000;
+	height: 750;
+	display: none;
+	z-index: 10;
+}
 
-#paddles{	
-	padding-top: 20px;
-	display: flex;
-	justify-content: left;
+#game .screen.active {
+	margin: 0 auto;
+	text-align: center;
+	display: block;
+	font-family: 'Roboto', sans-serif;
+	font-size: 35px;	
+
+}
+
+#main-menu {
+	padding-top: 1em;
+	cursor: pointer;
+	font-size: 0.75em;
+}
+
+ul.menu {
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+ul.menu li {
+	margin: 0.8em 0;
+}
+
+ul.menu li .button {
+	font-family: 'Roboto', sans-serif;
+	font-size: 35px;	
+	width: 10em;		
+  border: none;
+	color: #00d0d0;
+	background-color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;  
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+ul.menu li .button:hover {
+	color: black;
+	background-color: #00d0d0;
+}
+
+ul.menu li button:active {
+	color: #CECEF6;
+	background: rgb(0, 0, 0);
+}
+
+#game div h1 {
+	font-size: 1em;
+	text-align: center;
+}
+
+#high-scores ol {
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+#game div p {
+	font-size: 0.5em;
+}
+
+#about p {
+	text-align: center;
 }

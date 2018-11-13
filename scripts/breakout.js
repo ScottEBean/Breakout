@@ -1,4 +1,4 @@
-Breakout.main = (function (graphics, input) {
+Breakout.screens['game-play'] = (function (menu, graphics, input) {
 
 	let CANVASWIDTH = 1000;
 	let CANVASHEIGHT = 750;
@@ -10,36 +10,50 @@ Breakout.main = (function (graphics, input) {
 	let dr = 0.20;
 	let brickCount = 0;
 	let knuckleBall = false;
+	let cancelNextRequest = false;
 	let points = 0;
 	let bats = 3;
 
 	let lastTimeStamp = performance.now();
 	let keyboard = input.Keyboard();
 
-	var gameBall = graphics.Baseball({
-		imageSrc: 'images/baseball.png',
-		center: { x: x, y: y },
-		width: 25,
-		height: 25,
-		radius: 13,
-		rotation: 0,
-		moveRate: 400
-	});
+	function initialize(){
+		let gameBall = graphics.Baseball({
+			imageSrc: 'images/baseball.png',
+			center: { x: x, y: y },
+			width: 25,
+			height: 25,
+			radius: 13,
+			rotation: 0,
+			moveRate: 400
+		});
 
-	var gameBat = graphics.Bat({
-		imageSrc: 'images/bat.png',
-		center: { x: x, y: y + 25 },
-		width: 150,
-		height: 16,
-		rotation: 0,
-		moveRate: 500,
-	});
+		let gameBat = graphics.Bat({
+			imageSrc: 'images/bat.png',
+			center: { x: x, y: y + 25 },
+			width: 150,
+			height: 16,
+			rotation: 0,
+			moveRate: 500,
+		});
 
-	var gameBricks = graphics.Bricks();
+		let gameBricks = graphics.Bricks();
 
-	graphics.drawBackground();
-	
-	gameBall.init(dr);
+		graphics.drawBackground();
+		gameBricks.draw();
+
+		gameBall.init(dr);
+
+		keyboard.registerCommand(KeyEvent.DOM_VK_A, gameBat.moveLeft);
+		keyboard.registerCommand(KeyEvent.DOM_VK_LEFT, gameBat.moveLeft);
+		keyboard.registerCommand(KeyEvent.DOM_VK_D, gameBat.moveRight);
+		keyboard.registerCommand(KeyEvent.DOM_VK_RIGHT, gameBat.moveRight);
+		keyboard.registerCommand(KeyEvent.DOM_VK_SPACE, go);
+		keyboard.registerCommand(KeyEvent.DOM_VK_ESCAPE, function(){
+			cancelNextRequest = true;
+			menu.showScreen('main-menu');
+		})
+	}
 
 	function processInput(elapsedTime) {
 		keyboard.processInput(elapsedTime);
@@ -64,7 +78,7 @@ Breakout.main = (function (graphics, input) {
 
 			if (x + dx > gameBat.leftEdge() && x + dx < gameBat.rightEdge()) { //bat
 				dy = -dy;
-				dx = 15 * ((gameBall.getCenter().x - gameBat.getCenter()) / (gameBat.getWidth() / 2));			
+				dx = 15 * ((gameBall.getCenter().x - gameBat.getCenter()) / (gameBat.getWidth() / 2));
 				dr = -dr
 			} else { //floor
 				dy = 0;
@@ -163,17 +177,17 @@ Breakout.main = (function (graphics, input) {
 		if (brickCount == 62) { dx *= 2.00; dy *= 2.00; }
 	}
 
-	function drawGameOver(){
+	function drawGameOver() {
 		graphics.setLargeTextProps();
 		graphics.drawText("Game Over :(", 141, 350);
 	}
-	
-	function go() {		
-		if(bats < 1 || Math.abs(dx) > 0 || Math.abs(dy) > 0){ 
-			drawGameOver();	
+
+	function go() {
+		if (bats < 1 || Math.abs(dx) > 0 || Math.abs(dy) > 0) {
+			drawGameOver();
 			return;
-		 }
-		
+		}
+
 		graphics.setCountdownTextProps();
 		graphics.drawText("3", 250, 200);
 		setTimeout(function () { graphics.drawText("2", 500, 200); }, 1000);
@@ -181,22 +195,31 @@ Breakout.main = (function (graphics, input) {
 		setTimeout(function () { graphics.setLargeTextProps(); }, 2999);
 		setTimeout(function () { graphics.drawText("Go!", 405, 500); }, 3000);
 		setTimeout(function () { graphics.clearTopLayer(); }, 3300);
-		setTimeout(function (){
+		setTimeout(function () {
 			if (knuckleBall) {
 				graphics.drawPaddles(--bats);
 				dx = -dx;
 				dy = -dy;
-				knuckleBall = false;				
+				knuckleBall = false;
 			}
 			dx = 7;
 			dy = -5;
 		}, 3300);
 	}
 
+	function run() {
+		lastTimeStamp = performance.now();
+		initialize();
+		// Start the animation loop
+		cancelNextRequest = false;
+		requestAnimationFrame(breakoutLoop);
+		console.log('Breakout!');
+	}
+
 	function update(elapsedTime) {
 		calculateBallCollisions();
 		gameBall.update(dx, dy, dr, elapsedTime);
-		
+
 	}
 
 	function render() {
@@ -220,16 +243,16 @@ Breakout.main = (function (graphics, input) {
 			processInput(elapsedTime);
 		}
 
-		requestAnimationFrame(breakoutLoop);
+		if(!cancelNextRequest){
+			requestAnimationFrame(breakoutLoop);
+		}
+
 	};
 
-	keyboard.registerCommand(KeyEvent.DOM_VK_A, gameBat.moveLeft);
-	keyboard.registerCommand(KeyEvent.DOM_VK_LEFT, gameBat.moveLeft);
-	keyboard.registerCommand(KeyEvent.DOM_VK_D, gameBat.moveRight);
-	keyboard.registerCommand(KeyEvent.DOM_VK_RIGHT, gameBat.moveRight);
-	keyboard.registerCommand(KeyEvent.DOM_VK_SPACE, go);
+	return{
+		initialize: initialize,
+		run: run
+	};
+	
 
-	console.log('Breakout!');
-	requestAnimationFrame(breakoutLoop);
-
-}(Breakout.graphics, Breakout.input));
+}(Breakout.graphics, Breakout.input, Breakout.menus));
