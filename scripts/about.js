@@ -1,5 +1,4 @@
-Breakout.screens['about'] = (function(menu) {
-	'use strict';
+Breakout.screens['about'] = (function(menu) {	
 	
 	function initialize() {
 		document.getElementById('id-about-back').addEventListener(

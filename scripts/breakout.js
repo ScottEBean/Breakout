@@ -1,4 +1,4 @@
-Breakout.screens['game-play'] = (function (menu, graphics, input) {
+Breakout.screens['game-play'] = (function (input, graphics, menu) {
 
 	let CANVASWIDTH = 1000;
 	let CANVASHEIGHT = 750;
@@ -13,13 +13,15 @@ Breakout.screens['game-play'] = (function (menu, graphics, input) {
 	let cancelNextRequest = false;
 	let points = 0;
 	let bats = 3;
+	let gameBall = null;
+	let gameBat = null;
+	let gameBricks = null;
 
 	let lastTimeStamp = performance.now();
 	let keyboard = input.Keyboard();
-	let mouse = input.Mouse();
 
-	//function initialize(){
-		let gameBall = graphics.Baseball({
+	function initialize() {
+		gameBall = graphics.Baseball({
 			imageSrc: 'images/baseball.png',
 			center: { x: x, y: y },
 			width: 25,
@@ -29,7 +31,7 @@ Breakout.screens['game-play'] = (function (menu, graphics, input) {
 			moveRate: 400
 		});
 
-		let gameBat = graphics.Bat({
+		gameBat = graphics.Bat({
 			imageSrc: 'images/bat.png',
 			center: { x: x, y: y + 25 },
 			width: 150,
@@ -38,7 +40,7 @@ Breakout.screens['game-play'] = (function (menu, graphics, input) {
 			moveRate: 500,
 		});
 
-		let gameBricks = graphics.Bricks();
+		gameBricks = graphics.Bricks();
 
 		graphics.drawBackground();
 		gameBricks.draw();
@@ -50,14 +52,14 @@ Breakout.screens['game-play'] = (function (menu, graphics, input) {
 		keyboard.registerCommand(KeyEvent.DOM_VK_D, gameBat.moveRight);
 		keyboard.registerCommand(KeyEvent.DOM_VK_RIGHT, gameBat.moveRight);
 		keyboard.registerCommand(KeyEvent.DOM_VK_SPACE, go);
-		keyboard.registerCommand(KeyEvent.DOM_VK_ESCAPE, function(){
+		keyboard.registerCommand(KeyEvent.DOM_VK_ESCAPE, function () {
 			cancelNextRequest = true;
 			menu.showScreen('main-menu');
-		})
-	//}
+		});
+	}
 
 	function processInput(elapsedTime) {
-		keyboard.processInput(elapsedTime);
+		keyboard.update(elapsedTime);
 	}
 
 	function calculateBallCollisions() {
@@ -210,7 +212,6 @@ Breakout.screens['game-play'] = (function (menu, graphics, input) {
 
 	function run() {
 		lastTimeStamp = performance.now();
-		initialize();
 		// Start the animation loop
 		cancelNextRequest = false;
 		requestAnimationFrame(breakoutLoop);
@@ -243,16 +244,15 @@ Breakout.screens['game-play'] = (function (menu, graphics, input) {
 			processInput(elapsedTime);
 		}
 
-		if(!cancelNextRequest){
+		if (!cancelNextRequest) {
 			requestAnimationFrame(breakoutLoop);
 		}
 
 	};
 
-	return{
+	return {
 		initialize: initialize,
 		run: run
 	};
-	
 
-}(Breakout.graphics, Breakout.input, Breakout.menus));
+}(Breakout.input, Breakout.graphics, Breakout.menus));

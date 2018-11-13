@@ -1,6 +1,5 @@
 Breakout.menu = (function(screens){
-  'use strict';
-
+  
   function showScreen(id) {
     let screen = 0;
     let active = null;

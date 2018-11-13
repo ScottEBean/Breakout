@@ -1,5 +1,4 @@
 Breakout.screens['main-menu'] = (function(menu) {
-	'use strict';
 	
 	function initialize() {
 	

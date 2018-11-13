@@ -1,5 +1,4 @@
 Breakout.screens['help'] = (function(menu) {
-	'use strict';
 	
 	function initialize() {
 		document.getElementById('id-help-back').addEventListener(

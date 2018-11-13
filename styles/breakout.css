@@ -20,14 +20,14 @@ body{
 	font-size: 40px;
 }
 
-.canvases {		
-	max-width: 1000px;
-	min-height: 750px;
+#game-play {
+	margin: auto;
+	position: relative;
+	text-align: center;
+	display: block;
+	width: 1000;
+	height: 750;
 	border:5px solid #00d0d0;	
-}
-
-#game {
-	margin: 0 auto;	
 }
 
 #game .screen {	
@@ -38,12 +38,15 @@ body{
 }
 
 #game .screen.active {
-	margin: 0 auto;
-	text-align: center;
-	display: block;
 	font-family: 'Roboto', sans-serif;
-	font-size: 35px;	
+	font-size: 35px;
+	text-align: center;
+	display: block;	
+}
 
+.canvases {	
+	left: -500px;	
+	display: none;
 }
 
 #main-menu {

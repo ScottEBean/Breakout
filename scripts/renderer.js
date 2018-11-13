@@ -3,7 +3,6 @@
 // are located here.
 // ------------------------------------------------------------------
 Breakout.graphics = (function () {
-	'use strict';
 
 	let canvasBackground = document.getElementById('canvas-background');
 	let backgroundContext = canvasBackground.getContext('2d');
