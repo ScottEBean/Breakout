@@ -255,4 +255,4 @@ Breakout.screens['game-play'] = (function (input, graphics, menu) {
 		run: run
 	};
 
-}(Breakout.input, Breakout.graphics, Breakout.menus));
+}(Breakout.input, Breakout.graphics, Breakout.menu));
