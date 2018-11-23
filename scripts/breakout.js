@@ -1,4 +1,4 @@
-Breakout.screens['game-play'] = (function (input, graphics, menu) {
+Breakout.screens['game-play'] = (function (input, graphics, records, menu) {
 
 	let CANVASWIDTH = 1000;
 	let CANVASHEIGHT = 750;
@@ -16,6 +16,8 @@ Breakout.screens['game-play'] = (function (input, graphics, menu) {
 	let gameBall = null;
 	let gameBat = null;
 	let gameBricks = null;
+
+	let stats = records.persistence;
 
 	let lastTimeStamp = performance.now();
 	let keyboard = input.Keyboard();
@@ -55,7 +57,24 @@ Breakout.screens['game-play'] = (function (input, graphics, menu) {
 		keyboard.registerCommand(KeyEvent.DOM_VK_ESCAPE, function () {
 			cancelNextRequest = true;
 			menu.showScreen('main-menu');
+
 		});
+	}
+
+	function reset(){
+		graphics.clear();
+		graphics.clearTopLayer();
+		dx = 0;
+		dy = 0;
+		dr = 0.20;
+		brickCount = 0;
+		knuckleBall = false;
+		cancelNextRequest = false;
+		points = 0;
+		bats = 3;
+		gameBall = null;
+		gameBat = null;
+		gameBricks = null;
 	}
 
 	function processInput(elapsedTime) {
@@ -88,7 +107,11 @@ Breakout.screens['game-play'] = (function (input, graphics, menu) {
 				dx = 0;
 				brickCount = 0;
 				updateBallSpeed();
-				knuckleBall = true;
+				knuckleBall = true;		
+				--bats;
+				if(bats < 0){
+					drawGameOver();
+				}
 				return;
 			}
 
@@ -183,11 +206,13 @@ Breakout.screens['game-play'] = (function (input, graphics, menu) {
 	function drawGameOver() {
 		graphics.setLargeTextProps();
 		graphics.drawText("Game Over :(", 141, 350);
+		stats.update(points);		
+		setTimeout(function () {reset(), 1000});
 	}
 
 	function go() {
-		if (bats < 1 || Math.abs(dx) > 0 || Math.abs(dy) > 0) {
-			drawGameOver();
+		if (bats < 0 || Math.abs(dx) > 0 || Math.abs(dy) > 0) {
+			// drawGameOver();
 			return;
 		}
 
@@ -200,7 +225,7 @@ Breakout.screens['game-play'] = (function (input, graphics, menu) {
 		setTimeout(function () { graphics.clearTopLayer(); }, 3300);
 		setTimeout(function () {
 			if (knuckleBall) {
-				graphics.drawPaddles(--bats);
+				graphics.drawPaddles(bats);
 				dx = -dx;
 				dy = -dy;
 				knuckleBall = false;
