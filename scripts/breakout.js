@@ -16,13 +16,17 @@ Breakout.screens['game-play'] = (function (input, graphics, records, menu) {
 	let gameBall = null;
 	let gameBat = null;
 	let gameBricks = null;
-
-	let stats = records.persistence;
-
 	let lastTimeStamp = performance.now();
 	let keyboard = input.Keyboard();
+	Breakout.records.initialize();
+
 
 	function initialize() {
+		dx = 0;
+		dy = 0;
+		dr = 0.20;
+		brickCount = 0;
+
 		gameBall = graphics.Baseball({
 			imageSrc: 'images/baseball.png',
 			center: { x: x, y: y },
@@ -75,6 +79,30 @@ Breakout.screens['game-play'] = (function (input, graphics, records, menu) {
 		gameBall = null;
 		gameBat = null;
 		gameBricks = null;
+
+		gameBall = graphics.Baseball({
+			imageSrc: 'images/baseball.png',
+			center: { x: x, y: y },
+			width: 25,
+			height: 25,
+			radius: 13,
+			rotation: 0,
+			moveRate: 400
+		});
+
+		gameBat = graphics.Bat({
+			imageSrc: 'images/bat.png',
+			center: { x: x, y: y + 25 },
+			width: 150,
+			height: 16,
+			rotation: 0,
+			moveRate: 500,
+		});
+
+		gameBricks = graphics.Bricks();
+		graphics.drawBackground();
+		gameBricks.draw();
+		gameBall.init(dr);
 	}
 
 	function processInput(elapsedTime) {
@@ -110,7 +138,7 @@ Breakout.screens['game-play'] = (function (input, graphics, records, menu) {
 				knuckleBall = true;		
 				--bats;
 				if(bats < 0){
-					drawGameOver();
+					gameOver();
 				}
 				return;
 			}
@@ -203,11 +231,13 @@ Breakout.screens['game-play'] = (function (input, graphics, records, menu) {
 		if (brickCount == 62) { dx *= 2.00; dy *= 2.00; }
 	}
 
-	function drawGameOver() {
+	function gameOver() {
+		setTimeout(function () {menu.showScreen('main-menu'), 1000});		
+
 		graphics.setLargeTextProps();
 		graphics.drawText("Game Over :(", 141, 350);
-		stats.update(points);		
-		setTimeout(function () {reset(), 1000});
+		Breakout.records.update(points);		
+		reset();
 	}
 
 	function go() {
@@ -280,4 +310,4 @@ Breakout.screens['game-play'] = (function (input, graphics, records, menu) {
 		run: run
 	};
 
-}(Breakout.input, Breakout.graphics, Breakout.menu));
+}(Breakout.input, Breakout.graphics, Breakout.records, Breakout.menu));
