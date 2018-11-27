@@ -17,7 +17,8 @@ Breakout.screens['game-play'] = (function (input, graphics, records, menu) {
 	let gameBat = null;
 	let gameBricks = null;
 	let lastTimeStamp = performance.now();
-	let keyboard = input.Keyboard();
+	let keyboard = input.Keyboard();	
+	
 	Breakout.records.initialize();
 
 
@@ -284,7 +285,7 @@ Breakout.screens['game-play'] = (function (input, graphics, records, menu) {
 		graphics.drawScore(points);
 		gameBall.draw();
 		gameBat.draw();
-		gameBricks.draw();
+		gameBricks.draw();		
 	}
 
 	function breakoutLoop(currentTime) {
@@ -302,7 +303,6 @@ Breakout.screens['game-play'] = (function (input, graphics, records, menu) {
 		if (!cancelNextRequest) {
 			requestAnimationFrame(breakoutLoop);
 		}
-
 	};
 
 	return {

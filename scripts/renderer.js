@@ -10,7 +10,6 @@ Breakout.graphics = (function () {
 	let context = canvas.getContext('2d');
 	let topLayer = document.getElementById('canvas-topLayer');
 	let topContext = topLayer.getContext('2d');
-	let paddles = document.getElementById('paddles');
 	let paddleImage = new Image();
 	paddleImage.src = 'images/bat.png';
 
@@ -236,6 +235,11 @@ Breakout.graphics = (function () {
 			x: spec.x,
 			y: spec.y
 		};
+		// top left corner
+		var tlc = {
+			x: center.x - spec.width / 2,
+			y: center.y - spec.width / 2
+		};
 		var width = spec.width;
 		var height = spec.height;
 
@@ -271,6 +275,10 @@ Breakout.graphics = (function () {
 			exists = spec.exists;
 		}
 
+		that.getTLC = function(){
+			return tlc;
+		}
+
 		that.getCenter = function () {
 			return center;
 		}
@@ -297,6 +305,7 @@ Breakout.graphics = (function () {
 		that.getBrick = function (index) {
 			return brickArr[index];
 		}
+
 		var count = 0;
 		for (var i = 0; i < 8; i++) {
 			for (var j = 0; j < 14; j++) {
